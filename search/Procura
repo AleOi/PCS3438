@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -e "Filtrado.txt" ]
+then
+    rm "Filtrado.txt"
+    echo "Filtrado.txt Deletado"
+fi
+
+# Codigo para procura de expressoes dentro de pasta
+for f in *.py 
+do
+  valor=`cat $f | grep -e $1`
+  echo $f >> "Filtrado.txt"
+  echo $valor >> "Filtrado.txt"
+done

@@ -75,6 +75,9 @@ def tinyMazeSearch(problem):
     return  [s, s, w, s, w, w, s, w]
 
 def depthFirstSearch(problem):
+    util.raiseNotDefined()
+    
+'''
     """
     Search the deepest nodes in the search tree first.
 
@@ -131,7 +134,7 @@ def depthFirstSearch(problem):
         node = node["parent"]
 
     return actions
-
+'''
 
 
 
@@ -167,7 +170,7 @@ def Euclid(a, b):
     print("Euclid")
     return m.sqrt((x1 - x2)**2 + (y1 - y2)**2)
 
-def aStarSearch(problem, heuristic=Euclid):
+def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
     fronteira = util.PriorityQueue()
