@@ -18,6 +18,8 @@ Pacman agents (in searchAgents.py).
 """
 
 import util
+import math as m
+import pdb 
 
 class SearchProblem:
     """
@@ -87,7 +89,51 @@ def depthFirstSearch(problem):
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    print "Start:", problem.getStartState()
+    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
+    print "Start's successors:", problem.getSuccessors(problem.getStartState())
+    print problem
+    
+    visited = dict()
+    state = problem.getStartState()
+    frontier = util.Stack()
+
+    node = {}
+    node["parent"] = None
+    node["action"] = None
+    node["state"] = state
+    frontier.push(node)
+
+    # DFS, non-recursive implementation
+    # by non-recurisve, we need to use stack to record
+    # which node  to visit when recall 
+    while not frontier.isEmpty():
+        node = frontier.pop()
+        state = node["state"]
+        if visited.has_key(hash(state)):
+            continue
+        visited[hash(state)] = True
+
+        if problem.isGoalState(state) == True:
+            break
+
+        for child in problem.getSuccessors(state):
+            if not visited.has_key(hash(child[0])):
+                sub_node = {}
+                sub_node["parent"] = node
+                sub_node["action"] = child[1]
+                sub_node["state"] = child[0]
+                frontier.push(sub_node)
+
+    actions = []
+    while node["action"] != None:
+        actions.insert(0, node["action"])
+        node = node["parent"]
+
+    return actions
+
+
+
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
@@ -104,53 +150,72 @@ def nullHeuristic(state, problem=None):
     A heuristic function estimates the cost from the current state to the nearest
     goal in the provided SearchProblem.  This heuristic is trivial.
     """
+    print("Null")
     return 0
 
-def aStarSearch(problem, heuristic=nullHeuristic):
-    """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    
-    
-    '''
-    def heuristic(a, b):
+# Distancia de Manhatan
+def Manhatan(a, b):
     (x1, y1) = a
     (x2, y2) = b
+    print("Man")
     return abs(x1 - x2) + abs(y1 - y2)
 
-    def a_star_search(graph, start, goal):
-        frontier = PriorityQueue()
-        frontier.put(start, 0)
-        came_from = {}
-        cost_so_far = {}
-        came_from[start] = None
-        cost_so_far[start] = 0
-        
-        while not frontier.empty():
-            current = frontier.get()
-            
-            if current == goal:
-                break
-            
-            for next in graph.neighbors(current):
-                new_cost = cost_so_far[current] + graph.cost(current, next)
-                if next not in cost_so_far or new_cost < cost_so_far[next]:
-                    cost_so_far[next] = new_cost
-                    priority = new_cost + heuristic(goal, next)
-                    frontier.put(next, priority)
-                    came_from[next] = current
-        
-    return came_from, cost_so_far
+# Distancia de Euclidiana
+def Euclid(a, b):
+    (x1, y1) = a
+    (x2, y2) = b 
+    print("Euclid")
+    return m.sqrt((x1 - x2)**2 + (y1 - y2)**2)
+
+def aStarSearch(problem, heuristic=Euclid):
+    """Search the node that has the lowest combined cost and heuristic first."""
+    "*** YOUR CODE HERE ***"
+    fronteira = util.PriorityQueue()
+    visitado = dict()
+    estado = problem.getStartState()
     
-    from implementation import *
-    start, goal = (1, 4), (7, 8)
-    came_from, cost_so_far = a_star_search(diagram4, start, goal)
-    draw_grid(diagram4, width=3, point_to=came_from, start=start, goal=goal)
-    print()
-    draw_grid(diagram4, width=3, number=cost_so_far, start=start, goal=goal)
-    print()
+    # Colocando o primeiro no na fornteira
+    no = {}
     
-    '''
+    no["pai"] = None     
+    no["acao"] = None     
+    no["estado"] = estado
+    no["custo"] = 0
+    no["heur"] = heuristic(estado, problem)
+    fronteira.push(no, no["custo"] + no["heur"])    
+
+    while not fronteira.isEmpty():
+        no = fronteira.pop()
+        estado = no["estado"]
+        custo = no["custo"]
+        v = no["heur"]
+
+        if visitado.has_key(estado):
+            continue
+
+        visitado[estado] = True
+        if problem.isGoalState(estado) == True:
+            break
+
+        for filho in problem.getSuccessors(estado):
+            if not visitado.has_key(filho[0]):
+                sub_no = {}
+                sub_no["pai"] = no
+                sub_no["estado"] = filho[0]
+                sub_no["acao"] = filho[1]
+                sub_no["custo"] = filho[2] + custo
+                sub_no["heur"] = heuristic(sub_no["estado"], problem)
+                fronteira.push(sub_no, sub_no["custo"] + no["heur"])
+
+    acao = []
+    while no["acao"] != None:
+        acao.insert(0, no["acao"])
+        no = no["pai"]
+
+    return acao
+
     
+
     '''
     
     def aStarSearch(problem, heuristic=nullHeuristic):
@@ -199,7 +264,51 @@ def aStarSearch(problem, heuristic=nullHeuristic):
 
         return actions
             '''
-            util.raiseNotDefined()
+
+
+    
+    
+    '''
+    def heuristic(a, b):
+    (x1, y1) = a
+    (x2, y2) = b
+    return abs(x1 - x2) + abs(y1 - y2)
+
+    def a_star_search(graph, start, goal):
+        frontier = PriorityQueue()
+        frontier.put(start, 0)
+        came_from = {}
+        cost_so_far = {}
+        came_from[start] = None
+        cost_so_far[start] = 0
+        
+        while not frontier.empty():
+            current = frontier.get()
+            
+            if current == goal:
+                break
+            
+            for next in graph.neighbors(current):
+                new_cost = cost_so_far[current] + graph.cost(current, next)
+                if next not in cost_so_far or new_cost < cost_so_far[next]:
+                    cost_so_far[next] = new_cost
+                    priority = new_cost + heuristic(goal, next)
+                    frontier.put(next, priority)
+                    came_from[next] = current
+        
+    return came_from, cost_so_far
+    
+    from implementation import *
+    start, goal = (1, 4), (7, 8)
+    came_from, cost_so_far = a_star_search(diagram4, start, goal)
+    draw_grid(diagram4, width=3, point_to=came_from, start=start, goal=goal)
+    print()
+    draw_grid(diagram4, width=3, number=cost_so_far, start=start, goal=goal)
+    print()
+    
+    '''
+    
+
 
 
 # Abbreviations
