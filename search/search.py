@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -19,7 +19,7 @@ Pacman agents (in searchAgents.py).
 
 import util
 import math as m
-import pdb 
+#import pdb
 
 class SearchProblem:
     """
@@ -76,67 +76,6 @@ def tinyMazeSearch(problem):
 
 def depthFirstSearch(problem):
     util.raiseNotDefined()
-    
-'''
-    """
-    Search the deepest nodes in the search tree first.
-
-    Your search algorithm needs to return a list of actions that reaches the
-    goal. Make sure to implement a graph search algorithm.
-
-    To get started, you might want to try some of these simple commands to
-    understand the search problem that is being passed in:
-
-    print "Start:", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors:", problem.getSuccessors(problem.getStartState())
-    """
-    "*** YOUR CODE HERE ***"
-    print "Start:", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors:", problem.getSuccessors(problem.getStartState())
-    print problem
-    
-    visited = dict()
-    state = problem.getStartState()
-    frontier = util.Stack()
-
-    node = {}
-    node["parent"] = None
-    node["action"] = None
-    node["state"] = state
-    frontier.push(node)
-
-    # DFS, non-recursive implementation
-    # by non-recurisve, we need to use stack to record
-    # which node  to visit when recall 
-    while not frontier.isEmpty():
-        node = frontier.pop()
-        state = node["state"]
-        if visited.has_key(hash(state)):
-            continue
-        visited[hash(state)] = True
-
-        if problem.isGoalState(state) == True:
-            break
-
-        for child in problem.getSuccessors(state):
-            if not visited.has_key(hash(child[0])):
-                sub_node = {}
-                sub_node["parent"] = node
-                sub_node["action"] = child[1]
-                sub_node["state"] = child[0]
-                frontier.push(sub_node)
-
-    actions = []
-    while node["action"] != None:
-        actions.insert(0, node["action"])
-        node = node["parent"]
-
-    return actions
-'''
-
-
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
@@ -156,36 +95,22 @@ def nullHeuristic(state, problem=None):
     print("Null")
     return 0
 
-# Distancia de Manhatan
-def Manhatan(a, b):
-    (x1, y1) = a
-    (x2, y2) = b
-    print("Man")
-    return abs(x1 - x2) + abs(y1 - y2)
-
-# Distancia de Euclidiana
-def Euclid(a, b):
-    (x1, y1) = a
-    (x2, y2) = b 
-    print("Euclid")
-    return m.sqrt((x1 - x2)**2 + (y1 - y2)**2)
-
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
     fronteira = util.PriorityQueue()
     visitado = dict()
     estado = problem.getStartState()
-    
+
     # Colocando o primeiro no na fornteira
     no = {}
-    
-    no["pai"] = None     
-    no["acao"] = None     
+
+    no["pai"] = None
+    no["acao"] = None
     no["estado"] = estado
     no["custo"] = 0
     no["heur"] = heuristic(estado, problem)
-    fronteira.push(no, no["custo"] + no["heur"])    
+    fronteira.push(no, no["custo"] + no["heur"])
 
     while not fronteira.isEmpty():
         no = fronteira.pop()
@@ -214,13 +139,14 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     while no["acao"] != None:
         acao.insert(0, no["acao"])
         no = no["pai"]
+    #pdb.set_trace()
 
     return acao
 
-    
+
 
     '''
-    
+
     def aStarSearch(problem, heuristic=nullHeuristic):
         "Search the node that has the lowest combined cost and heuristic first."
         "*** YOUR CODE HERE ***"
@@ -269,8 +195,8 @@ def aStarSearch(problem, heuristic=nullHeuristic):
             '''
 
 
-    
-    
+
+
     '''
     def heuristic(a, b):
     (x1, y1) = a
@@ -284,13 +210,13 @@ def aStarSearch(problem, heuristic=nullHeuristic):
         cost_so_far = {}
         came_from[start] = None
         cost_so_far[start] = 0
-        
+
         while not frontier.empty():
             current = frontier.get()
-            
+
             if current == goal:
                 break
-            
+
             for next in graph.neighbors(current):
                 new_cost = cost_so_far[current] + graph.cost(current, next)
                 if next not in cost_so_far or new_cost < cost_so_far[next]:
@@ -298,9 +224,9 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                     priority = new_cost + heuristic(goal, next)
                     frontier.put(next, priority)
                     came_from[next] = current
-        
+
     return came_from, cost_so_far
-    
+
     from implementation import *
     start, goal = (1, 4), (7, 8)
     came_from, cost_so_far = a_star_search(diagram4, start, goal)
@@ -308,9 +234,9 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     print()
     draw_grid(diagram4, width=3, number=cost_so_far, start=start, goal=goal)
     print()
-    
+
     '''
-    
+
 
 
 

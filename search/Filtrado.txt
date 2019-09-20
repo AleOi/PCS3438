@@ -1,9 +1,9 @@
 ASTarGraph.py
-
+def heuristic(self, start, goal): dx = abs(start[0] - goal[0]) dy = abs(start[1] - goal[1]) #Check if we have reached the goal
 autograder.py
 
 eightpuzzle.py
-
+Checks to see if the puzzle is in its goal state.
 game.py
 
 ghostAgents.py
@@ -25,11 +25,11 @@ pacman.py
 projectParams.py
 
 searchAgents.py
-
+board. Here, we choose a path to the goal. In this phase, the agent should compute the path to the goal and store it in a local variable. A search problem defines the state space, start state, goal test, successor def __init__(self, gameState, costFn = lambda x: 1, goal=(1,1), start=None, warn=True, visualize=True): Stores the start and goal. goal: A position in the gameState self.goal = goal if warn and (gameState.getNumFood() != 1 or not gameState.hasFood(*goal)): isGoal = state == self.goal xy2 = problem.goal xy2 = problem.goal Returns whether this search state is a goal state of the problem. shortest path from the state to a goal of the problem; i.e. it should be different goal test, which you need to fill in below. The state space and The state is Pacman's position. Fill this in with a goal test that will prob = PositionSearchProblem(gameState, start=point1, goal=point2, warn=False, visualize=False)
 search.py
-
+Returns True if and only if the state is a valid goal state. goal in the provided SearchProblem. This heuristic is trivial. def a_star_search(graph, start, goal): if current == goal: priority = new_cost + heuristic(goal, next) start, goal = (1, 4), (7, 8) came_from, cost_so_far = a_star_search(diagram4, start, goal) draw_grid(diagram4, width=3, point_to=came_from, start=start, goal=goal) draw_grid(diagram4, width=3, number=cost_so_far, start=start, goal=goal)
 searchTestClasses.py
-
+r = re.match('goal_states:(.*)', lines[1]) raise Exception("GraphSearch graph specification goal_states not found or incorrect on line:" + l) goals = r.group(1).split() self.goals = map(str.strip, goals) # Check if a state is a goal state return state in self.goals goal_states: %s %s""" % (self.start_state, " ".join(self.goals), "\n".join(edges)) return False, 'Heuristic failed H(goal) == 0 test' grades.addMessage('FAIL: heuristic non-zero at goal') handle.write('# true cost of the optimal path from that state to a goal.\n')
 submission_autograder.py
 
 testClasses.py

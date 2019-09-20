@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -40,6 +40,7 @@ from game import Actions
 import util
 import time
 import search
+import pdb
 
 class GoWestAgent(Agent):
     "An agent that goes West until it can't."
@@ -75,7 +76,6 @@ class SearchAgent(Agent):
 
     def __init__(self, fn='depthFirstSearch', prob='PositionSearchProblem', heuristic='nullHeuristic'):
         # Warning: some advanced Python magic is employed below to find the right functions and problems
-
         # Get the search function from the name and heuristic
         if fn not in dir(search):
             raise AttributeError, fn + ' is not a search function in search.py.'
@@ -111,6 +111,7 @@ class SearchAgent(Agent):
         """
         if self.searchFunction == None: raise Exception, "No search function provided for SearchAgent"
         starttime = time.time()
+        #pdb.set_trace()
         problem = self.searchType(state) # Makes a new search problem
         self.actions  = self.searchFunction(problem) # Find a path
         totalCost = problem.getCostOfActions(self.actions)
@@ -144,7 +145,8 @@ class PositionSearchProblem(search.SearchProblem):
     Note: this search problem is fully specified; you should NOT change it.
     """
 
-    def __init__(self, gameState, costFn = lambda x: 1, goal=(1,1), start=None, warn=True, visualize=True):
+    # Modificar aqui para definir novo goal
+    def __init__(self, gameState, costFn = lambda x: 1, goal=(24,12), start=None, warn=True, visualize=True):
         """
         Stores the start and goal.
 

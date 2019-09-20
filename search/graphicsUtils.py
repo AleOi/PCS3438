@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -20,6 +20,7 @@ import time
 import types
 import Tkinter
 import os.path
+import pdb
 
 _Windows = sys.platform == 'win32'  # True if on Win95/98/NT
 
@@ -85,6 +86,7 @@ def begin_graphics(width=640, height=480, color=formatColor(0, 0, 0), title=None
         raise
 
     # Bind to key-down and key-up events
+
     _root_window.bind( "<KeyPress>", _keypress )
     _root_window.bind( "<KeyRelease>", _keyrelease )
     _root_window.bind( "<FocusIn>", _clear_keys )

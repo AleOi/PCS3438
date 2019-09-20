@@ -4,13 +4,12 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
 # Student side autograding was added by Brad Miller, Nick Hay, and
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
-
 
 """
 Pacman.py holds the logic for the classic pacman game along with the main
@@ -48,6 +47,7 @@ from util import manhattanDistance
 import util, layout
 import sys, types, time, random, os
 import pdb
+
 
 ###################################################
 # YOUR INTERFACE TO THE PACMAN WORLD: A GameState #
@@ -160,8 +160,8 @@ class GameState:
         return self.data.agentStates[agentIndex].getPosition()
 
     def getGhostPositions(self):
-        return [s.getPosition() for s in self.getGhostStates()]
 
+        return [s.getPosition() for s in self.getGhostStates()]
     def getNumAgents( self ):
         return len( self.data.agentStates )
 
@@ -340,6 +340,7 @@ class PacmanRules:
         Edits the state to reflect the results of the action.
         """
         legal = PacmanRules.getLegalActions( state )
+        #pdb.set_trace()
         if action not in legal:
             raise Exception("Illegal action " + str(action))
 
@@ -487,10 +488,12 @@ def readCommand( argv ):
                 OR  python pacman.py -l smallClassic -z 2
                     - starts an interactive game on a smaller board, zoomed in
     """
+
     parser = OptionParser(usageStr)
 
     parser.add_option('-n', '--numGames', dest='numGames', type='int',
                       help=default('the number of GAMES to play'), metavar='GAMES', default=1)
+
     parser.add_option('-l', '--layout', dest='layout',
                       help=default('the LAYOUT_FILE from which to load the map layout'),
                       metavar='LAYOUT_FILE', default='mediumClassic')
@@ -544,6 +547,7 @@ def readCommand( argv ):
     if options.numTraining > 0:
         args['numTraining'] = options.numTraining
         if 'numTraining' not in agentOpts: agentOpts['numTraining'] = options.numTraining
+    #pdb.set_trace()
     pacman = pacmanType(**agentOpts) # Instantiate Pacman with agentArgs
     args['pacman'] = pacman
 
@@ -617,7 +621,7 @@ def replayGame( layout, actions, display ):
     display.initialize(state.data)
 
     for action in actions:
-            # Execute the action
+        # Execute the action
         state = state.generateSuccessor( *action )
         # Change the display
         display.update( state.data )
@@ -644,6 +648,7 @@ def runGames( layout, pacman, ghosts, display, numGames, record, numTraining = 0
             gameDisplay = display
             rules.quiet = False
         game = rules.newGame( layout, pacman, ghosts, gameDisplay, beQuiet, catchExceptions)
+
         game.run()
         if not beQuiet: games.append(game)
 
@@ -680,6 +685,7 @@ if __name__ == '__main__':
 
     args = readCommand( sys.argv[1:] ) # Get game components based on input
     runGames( **args )
+
 
     # import cProfile
     # cProfile.run("runGames( **args )")
