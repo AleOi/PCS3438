@@ -1,6 +1,6 @@
-Modifique o arquivo searchAgents.py 
+Modifique o arquivo searchAgents.py
 em goal para setar o local onde você quer
 que o pacman vá
-Exemlo de entrada para o código
+Exemplo de entrada para o código
 python pacman.py -p SearchAgent -a fn=aStarSearch,heuristic=manhattanHeuristic -l bigMaze
 Caso queira a funcao euclidiana mude para euclidanHeuristic

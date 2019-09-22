@@ -146,7 +146,7 @@ class PositionSearchProblem(search.SearchProblem):
     """
 
     # Modificar aqui para definir novo goal
-    def __init__(self, gameState, costFn = lambda x: 1, goal=(24,12), start=None, warn=True, visualize=True):
+    def __init__(self, gameState, costFn = lambda x: 1, goal=(1,24), start=None, warn=True, visualize=True):
         """
         Stores the start and goal.
 
@@ -257,6 +257,10 @@ def manhattanHeuristic(position, problem, info={}):
     xy1 = position
     xy2 = problem.goal
     return abs(xy1[0] - xy2[0]) + abs(xy1[1] - xy2[1])
+
+def Retorna(position, problem, info={}):
+    "The Manhattan distance heuristic for a PositionSearchProblem"
+    return 50
 
 def euclideanHeuristic(position, problem, info={}):
     "The Euclidean distance heuristic for a PositionSearchProblem"

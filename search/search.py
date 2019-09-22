@@ -19,7 +19,7 @@ Pacman agents (in searchAgents.py).
 
 import util
 import math as m
-#import pdb
+import pdb
 
 class SearchProblem:
     """
@@ -127,6 +127,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
 
         for filho in problem.getSuccessors(estado):
             if not visitado.has_key(filho[0]):
+
                 sub_no = {}
                 sub_no["pai"] = no
                 sub_no["estado"] = filho[0]
@@ -139,7 +140,6 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     while no["acao"] != None:
         acao.insert(0, no["acao"])
         no = no["pai"]
-    #pdb.set_trace()
 
     return acao
 
