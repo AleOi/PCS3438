@@ -104,7 +104,6 @@ def aStarSearch(problem, heuristic=nullHeuristic):
 
     # Colocando o primeiro no na fornteira
     no = {}
-
     no["pai"] = None
     no["acao"] = None
     no["estado"] = estado
@@ -112,35 +111,46 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     no["heur"] = heuristic(estado, problem)
     fronteira.push(no, no["custo"] + no["heur"])
 
+    # Gera o loop
     while not fronteira.isEmpty():
+        # Adiciona em no o elemento da fronteira
         no = fronteira.pop()
         estado = no["estado"]
         custo = no["custo"]
         v = no["heur"]
 
+        # Se o estado foi visitado, pule
         if visitado.has_key(estado):
             continue
 
+        # Adiciona o estado em visitado
+        # e diz que foi visitado
         visitado[estado] = True
+        # Se cheguei no estado, termino o loop
         if problem.isGoalState(estado) == True:
             break
-
         for filho in problem.getSuccessors(estado):
+            # Se filho nao visitado adicione na fronteira
             if not visitado.has_key(filho[0]):
-
                 sub_no = {}
                 sub_no["pai"] = no
                 sub_no["estado"] = filho[0]
                 sub_no["acao"] = filho[1]
                 sub_no["custo"] = filho[2] + custo
                 sub_no["heur"] = heuristic(sub_no["estado"], problem)
-                fronteira.push(sub_no, sub_no["custo"] + no["heur"])
-
+                # Adicionando na fronteira o no e a soma entre custo e
+                pdb.set_trace()
+                # heuristica
+                fronteira.push(sub_no, sub_no["custo"] + sub_no["heur"])
     acao = []
+    # Construindo o caminho
+    # Pegue no dicionario no o outro dicionario pai
+    # E vai adicionando em acao
     while no["acao"] != None:
+        # Coloque no comeco da lista
         acao.insert(0, no["acao"])
+        # Pegue o no pai (atualiza no)
         no = no["pai"]
-
     return acao
 
 
