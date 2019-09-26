@@ -146,7 +146,7 @@ class PositionSearchProblem(search.SearchProblem):
     """
 
     # Modificar aqui para definir novo goal
-    def __init__(self, gameState, costFn = lambda x: 1, goal=(1,24), start=None, warn=True, visualize=True):
+    def __init__(self, gameState, costFn = lambda x: 1, goal=(1,1), start=None, warn=True, visualize=True):
         """
         Stores the start and goal.
 

@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -18,7 +18,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -30,7 +30,7 @@ import sys
 import inspect
 import heapq, random
 import cStringIO
-
+import pdb
 
 class FixedRandom:
     def __init__(self):
@@ -195,6 +195,7 @@ class PriorityQueue:
         # If item already in priority queue with higher priority, update its priority and rebuild the heap.
         # If item already in priority queue with equal or lower priority, do nothing.
         # If item not in priority queue, do the same thing as self.push.
+        # p c i -> priority, count, item
         for index, (p, c, i) in enumerate(self.heap):
             if i == item:
                 if p <= priority:
@@ -205,6 +206,9 @@ class PriorityQueue:
                 break
         else:
             self.push(item, priority)
+
+
+
 
 class PriorityQueueWithFunction(PriorityQueue):
     """

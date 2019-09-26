@@ -98,60 +98,57 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    fronteira = util.PriorityQueue()
-    visitado = dict()
-    estado = problem.getStartState()
+
+    # Inicializando variaveis
+    borda = util.PriorityQueue()
+    visitado = []
 
     # Colocando o primeiro no na fornteira
-    no = {}
-    no["pai"] = None
-    no["acao"] = None
-    no["estado"] = estado
-    no["custo"] = 0
-    no["heur"] = heuristic(estado, problem)
-    fronteira.push(no, no["custo"] + no["heur"])
+    # Adicionando (estado e acao) + prioridade heuristica
+    borda.push( (problem.getStartState(), []), heuristic(problem.getStartState(), problem) )
+    visitado.append(problem.getStartState())
+
+
+    # Note:
+    # Como borda e uma priorityqueu
+    # Quando coloco .push
+    # A prioridade fica custo + heuristica
+    # Assim, quando dou pop sairia o elemento com menor
+    # valor de euristica + custo
 
     # Gera o loop
-    while not fronteira.isEmpty():
+    while not borda.isEmpty():
         # Adiciona em no o elemento da fronteira
-        no = fronteira.pop()
-        estado = no["estado"]
-        custo = no["custo"]
-        v = no["heur"]
+        # com menor custo + heuristica
+        estado, acao = borda.pop()
 
-        # Se o estado foi visitado, pule
-        if visitado.has_key(estado):
-            continue
-
-        # Adiciona o estado em visitado
-        # e diz que foi visitado
-        visitado[estado] = True
+        # Estados de Terminos:
+        #####################################################
         # Se cheguei no estado, termino o loop
         if problem.isGoalState(estado) == True:
-            break
+            return acao
+        #####################################################
+
+        # Se o estado nao foi visitado, adicione o estado
+        if estado not in visitado:
+            visitado.append(estado)
+
+        # Loop
+        # filho: (estado, acao, numero)
         for filho in problem.getSuccessors(estado):
-            # Se filho nao visitado adicione na fronteira
-            if not visitado.has_key(filho[0]):
-                sub_no = {}
-                sub_no["pai"] = no
-                sub_no["estado"] = filho[0]
-                sub_no["acao"] = filho[1]
-                sub_no["custo"] = filho[2] + custo
-                sub_no["heur"] = heuristic(sub_no["estado"], problem)
-                # Adicionando na fronteira o no e a soma entre custo e
-                pdb.set_trace()
-                # heuristica
-                fronteira.push(sub_no, sub_no["custo"] + sub_no["heur"])
-    acao = []
-    # Construindo o caminho
-    # Pegue no dicionario no o outro dicionario pai
-    # E vai adicionando em acao
-    while no["acao"] != None:
-        # Coloque no comeco da lista
-        acao.insert(0, no["acao"])
-        # Pegue o no pai (atualiza no)
-        no = no["pai"]
-    return acao
+
+
+            # Se estado nao visitado adicione na fronteira
+            if filho[0] not in visitado:
+                # Adicionando na borda o no caso nao esteja na borda
+                # e caso haja, atualiza a lista de prioridade
+                # Isso permite nao se preocupar quando adicionar
+                # mesmo no , mas com prioridade menor
+                borda.update((filho[0], acao + [filho[1]]), \
+                   problem.getCostOfActions(acao+[filho[1]])+heuristic(filho[0], problem) )
+
+
+
 
 # Abbreviations
 bfs = breadthFirstSearch
