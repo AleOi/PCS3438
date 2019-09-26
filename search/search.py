@@ -82,6 +82,13 @@ def breadthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
 
+
+    fronteira = util.PriorityQueue()
+    visitado = dict()
+    estado = problem.getStartState()
+
+
+
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
